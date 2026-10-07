@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1778495904471,
+    "matricule": "j125763",
+    "nom": "adouch",
+    "prenom": "fahd",
+    "age": "20",
+    "specialite": "dev",
+    "email": "fahdadouch841@gmail.com"
+  },
+  {
+    "id": 1778495967562,
+    "matricule": "h7384",
+    "nom": "malak ",
+    "prenom": "diva",
+    "age": "23",
+    "specialite": "secer",
+    "email": "malak@gmail.com"
+  },
+  {
+    "id": 1778508846338,
+    "matricule": "D12972",
+    "nom": "outazari",
+    "prenom": "ilyas",
+    "age": "23",
+    "specialite": "dev",
+    "email": "ilyes@gmail.com"
+  }
+]

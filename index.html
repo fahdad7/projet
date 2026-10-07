@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gestion des Formateurs</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        input { margin-bottom: 5px; display: block; padding: 8px; width: 250px; }
+        button { cursor: pointer; margin-top: 5px; }
+        .formateur-item { border-bottom: 1px solid #ddd; padding: 10px; list-style: none; }
+    </style>
+</head>
+<body>
+
+<h1>Gestion des Formateurs</h1>
+
+<input id="matricule" placeholder="Matricule">
+<input id="nom" placeholder="Nom">
+<input id="prenom" placeholder="Prénom">
+<input id="age" type="number" placeholder="Age">
+<input id="specialite" placeholder="Spécialité">
+<input id="email" type="email" placeholder="Email">
+
+<button onclick="ajouter()">Ajouter Formateur</button>
+
+<hr>
+
+<button onclick="charger()">Actualiser la Liste</button>
+<div id="liste"></div>
+
+<script>
+const API = "http://localhost:3000/formateurs";
+
+async function charger() {
+    let res = await fetch(API);
+    let data = await res.json();
+    afficher(data);
+}
+
+function afficher(data) {
+    let html = "<ul>";
+    data.forEach(f => {
+        html += `
+            <li class="formateur-item">
+                <strong>[${f.matricule}]</strong> ${f.nom} ${f.prenom} <br>
+                Age: ${f.age} | Spécialité: ${f.specialite} | Email: ${f.email}
+                <button onclick="supprimer(${f.id})">❌ Supprimer</button>
+            </li>
+        `;
+    });
+    html += "</ul>";
+    document.getElementById("liste").innerHTML = html;
+}
+
+async function ajouter() {
+    let formateur = {
+        matricule: document.getElementById("matricule").value,
+        nom: document.getElementById("nom").value,
+        prenom: document.getElementById("prenom").value,
+        age: document.getElementById("age").value,
+        specialite: document.getElementById("specialite").value,
+        email: document.getElementById("email").value
+    };
+
+    await fetch(API, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formateur)
+    });
+
+    // Vider les champs
+    document.querySelectorAll('input').forEach(input => input.value = '');
+    charger();
+}
+
+async function supprimer(id) {
+    if(confirm("Bghiti t-msah had l-formateur?")) {
+        await fetch(`${API}/${id}`, { method: "DELETE" });
+        charger();
+    }
+}
+
+// Charger la liste au démarrage
+charger();
+</script>
+
+</body>
+</html>
